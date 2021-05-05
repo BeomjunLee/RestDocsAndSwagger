@@ -6,16 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ResponseSignup {
+public class ResponseFollowList {
     private ResultCode resultCode;
     private int status;
     private String message;
-    private ResponseUser data;
+    private List<String> data;
 
     @Builder
-    public ResponseSignup(ResultCode resultCode, int status, String message, ResponseUser data) {
+    public ResponseFollowList(ResultCode resultCode, int status, String message, List<String> data) {
         this.resultCode = resultCode;
         this.status = status;
         this.message = message;

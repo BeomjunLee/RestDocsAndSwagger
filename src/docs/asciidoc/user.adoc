@@ -86,15 +86,28 @@ include::{snippets}/user-signUp/response-fields.adoc[]
 `POST` 요청을 사용해서 다른 회원을 팔로잉 할 수 있다.
 
 include::{snippets}/user-following/curl-request.adoc[]
+include::{snippets}/user-following/path-parameters.adoc[]
 include::{snippets}/user-following/http-request.adoc[]
 include::{snippets}/user-following/request-fields.adoc[]
 include::{snippets}/user-following/http-response.adoc[]
 include::{snippets}/user-following/response-fields.adoc[]
 
+=== 팔로잉 목록 보기
 
-//[[resources-member-get]]
-//=== 회원 정보 조회
-//
-//`Get` 요청을 사용해서 회원을 조회할 수 있다. (권한 : USER)
-//
-//operation::user-following[snippets='curl-request,http-request,response-fields,http-response']
+`GET` 요청을 사용해서 회원의 팔로잉 목록을 볼 수 있다.
+
+include::{snippets}/user-getFollowing/curl-request.adoc[]
+include::{snippets}/user-getFollowing/path-parameters.adoc[]
+include::{snippets}/user-getFollowing/http-request.adoc[]
+include::{snippets}/user-getFollowing/http-response.adoc[]
+include::{snippets}/user-getFollowing/response-fields.adoc[]
+
+=== 팔로워 목록 보기
+
+`GET` 요청을 사용해서 회원의 팔로워 목록을 볼 수 있다.
+
+include::{snippets}/user-getFollower/curl-request.adoc[]
+include::{snippets}/user-getFollower/path-parameters.adoc[]
+include::{snippets}/user-getFollower/http-request.adoc[]
+include::{snippets}/user-getFollower/http-response.adoc[]
+include::{snippets}/user-getFollower/response-fields.adoc[]

@@ -3,12 +3,12 @@ package com.example.sample.user;
 import com.example.sample.user.exception.ResultCode;
 import com.example.sample.user.request.RequestUser;
 import com.example.sample.user.response.Response;
+import com.example.sample.user.response.ResponseFollowList;
 import com.example.sample.user.response.ResponseSignup;
 import com.example.sample.user.response.ResponseUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +32,7 @@ public class UserService {
                 .resultCode(ResultCode.OK)
                 .status(HttpStatus.CREATED.value())
                 .message("회원가입 성공")
-                .user(ResponseUser.builder()
+                .data(ResponseUser.builder()
                         .id(createdUser.getId())
                         .username(createdUser.getUsername())
                         .build())
@@ -67,21 +67,31 @@ public class UserService {
     /**
      * 팔로잉 목록 보기
      */
-    public List<ResponseUser> getFollowingList(Long userId) {
-          return followRepository.findAllByFollowerUser_Id(userId)
-                        .stream().map(follow -> ResponseUser.builder()
-                                            .username(follow.getFollowingUser().getUsername())
-                                            .build()).collect(Collectors.toList());
+    public ResponseFollowList getFollowingList(Long userId) {
+        List<Follow> follow = followRepository.findAllByFollowerUser_Id(userId);
+        List<String> followingList = follow.stream().map(f -> f.getFollowingUser().getUsername()).collect(Collectors.toList());
+
+        return ResponseFollowList.builder()
+                            .resultCode(ResultCode.OK)
+                            .status(HttpStatus.OK.value())
+                            .message("팔로잉 목록 조회 성공")
+                            .data(followingList)
+                            .build();
     }
 
     /**
      * 팔로워 목록 보기
      */
-    public List<ResponseUser> getFollowerList(Long userId) {
-        return followRepository.findAllByFollowingUser_Id(userId)
-                .stream().map(follow -> ResponseUser.builder()
-                        .username(follow.getFollowerUser().getUsername())
-                        .build()).collect(Collectors.toList());
+    public ResponseFollowList getFollowerList(Long userId) {
+        List<Follow> follow = followRepository.findAllByFollowingUser_Id(userId);
+        List<String> followerList = follow.stream().map(f -> f.getFollowerUser().getUsername()).collect(Collectors.toList());
+
+        return ResponseFollowList.builder()
+                .resultCode(ResultCode.OK)
+                .status(HttpStatus.OK.value())
+                .message("팔로워 목록 조회 성공")
+                .data(followerList)
+                .build();
     }
 
     public User getUser(String username) {
