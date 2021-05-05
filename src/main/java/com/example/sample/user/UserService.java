@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +18,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final FollowRepository followRepository;
 
-
+    /**
+     * 회원가입
+     */
     public ResponseUser createUser(RequestUser dto) {
         User user = User.createUser(dto);
         User createdUser = userRepository.save(user);
@@ -28,6 +31,9 @@ public class UserService {
                     .build();
     }
 
+    /**
+     * 팔로잉 및 언팔로우 하기
+     */
     public Response addFollowing(Long userId, String followUsername) {
         User user = userRepository.findById(userId).orElseThrow();
         User followingUser = userRepository.findByUsername(followUsername).orElseThrow();
@@ -48,5 +54,25 @@ public class UserService {
                 .code(200)
                 .message("언팔로우 되었습니다")
                 .build();
+    }
+
+    /**
+     * 팔로잉 목록 보기
+     */
+    public List<ResponseUser> getFollowingList(Long userId) {
+          return followRepository.findAllByFollowerUser_Id(userId)
+                        .stream().map(follow -> ResponseUser.builder()
+                                            .username(follow.getFollowingUser().getUsername())
+                                            .build()).collect(Collectors.toList());
+    }
+
+    /**
+     * 팔로워 목록 보기
+     */
+    public List<ResponseUser> getFollowerList(Long userId) {
+        return followRepository.findAllByFollowingUser_Id(userId)
+                .stream().map(follow -> ResponseUser.builder()
+                        .username(follow.getFollowerUser().getUsername())
+                        .build()).collect(Collectors.toList());
     }
 }

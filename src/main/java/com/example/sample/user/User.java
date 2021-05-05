@@ -21,14 +21,13 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(unique = true)
     private String username;
 
-    @OneToMany(mappedBy = "followerUser")
-    private List<Follow> followingList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "followingUser")
-    private List<Follow> followerList = new ArrayList<>();
+//    @OneToMany(mappedBy = "followerUser")
+//    private List<Follow> followingList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "followingUser")
+//    private List<Follow> followerList = new ArrayList<>();
 
     @Builder
     public User(String username) {
