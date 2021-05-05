@@ -2,10 +2,11 @@ package com.example.sample.user;
 
 import com.example.sample.user.request.RequestUser;
 import com.example.sample.user.response.Response;
+import com.example.sample.user.response.ResponseSignup;
 import com.example.sample.user.response.ResponseUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -14,6 +15,15 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
+    /**
+     * 회원가입
+     */
+    @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseSignup signUp(@RequestBody RequestUser requestUser) {
+        return userService.createUser(requestUser);
+    }
 
     /**
      * 팔로잉 및 언팔로잉 하기

@@ -8,16 +8,17 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Response {
-
+public class ResponseSignup {
     private ResultCode resultCode;
     private int status;
     private String message;
+    private ResponseUser user;
 
     @Builder
-    public Response(ResultCode resultCode, int status, String message) {
+    public ResponseSignup(ResultCode resultCode, int status, String message, ResponseUser user) {
         this.resultCode = resultCode;
         this.status = status;
         this.message = message;
+        this.user = user;
     }
 }

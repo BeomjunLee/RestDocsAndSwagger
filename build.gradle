@@ -1,7 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.4.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.asciidoctor.convert' version '1.5.8'
+    id "org.asciidoctor.convert" version "1.5.9.2"
     id 'java'
 }
 
@@ -34,8 +34,13 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
+    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+}
+
+ext {
+    snippetsDir = file('build/generated-snippets')
 }
 
 test {
@@ -47,3 +52,13 @@ asciidoctor {
     inputs.dir snippetsDir
     dependsOn test
 }
+
+bootJar {
+    dependsOn asciidoctor
+
+    copy{
+        from "build/asciidoc/html5"
+        into "src/main/resources/static/docs/"
+    }
+}
+
