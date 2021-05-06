@@ -61,6 +61,7 @@ openapi3 {
 ```
 <br>
 ### Sample Test Code (OpenAPI-Spec Swagger)
+
 ```java
 @Test
 @DisplayName("팔로잉 테스트")
