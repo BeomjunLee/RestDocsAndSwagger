@@ -3,6 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id "org.asciidoctor.convert" version "1.5.9.2"
     id 'java'
+    id 'com.epages.restdocs-api-spec' version '0.11.3'
 }
 
 group = 'com.example'
@@ -19,13 +20,11 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    set('snippetsDir', file("build/generated-snippets"))
-}
-
 dependencies {
     //jpa query log
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.7'
+
+    testCompile('com.epages:restdocs-api-spec-mockmvc:0.11.3') //2.2
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
@@ -35,8 +34,8 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 ext {
@@ -59,6 +58,19 @@ bootJar {
     copy{
         from "build/asciidoc/html5"
         into "src/main/resources/static/docs/"
+    }
+}
+
+openapi3 {
+    server = 'http://localhost:8080'
+    title = 'My API'
+    description = 'My API description'
+    version = '0.1.0'
+    format = 'yaml'
+
+    copy{
+        from "build/api-spec"
+        into "src/main/resources/static/docs"
     }
 }
 

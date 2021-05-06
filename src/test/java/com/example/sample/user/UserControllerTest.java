@@ -1,5 +1,6 @@
 package com.example.sample.user;
 
+import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.example.sample.user.exception.ResultCode;
 import com.example.sample.user.request.RequestUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,11 +16,13 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
+import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -76,7 +79,7 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("팔로우잉 테스트")
+    @DisplayName("팔로잉 테스트")
     public void following() throws Exception{
         //given
         RequestUser requestUser = RequestUser.builder()
@@ -86,7 +89,7 @@ class UserControllerTest {
         User user = userService.getUser(requestUser.getUsername());
 
         //when
-        mockMvc.perform(RestDocumentationRequestBuilders.post("/users/{id}/following", user.getId())
+        mockMvc.perform(post("/users/{id}/following", user.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestUser)))
                 .andDo(print())
@@ -108,7 +111,29 @@ class UserControllerTest {
                                 fieldWithPath("status").description("Http 상태코드"),
                                 fieldWithPath("message").description("응답 메세지")
                         )
+                ))
+                //Swagger 만 쓰면 pathParameters 와 request,response fields 가 restdocs 생성 안됨
+                .andDo(document("user-following",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(
+                                ResourceSnippetParameters.builder()
+                                        .description("다른 사용자를 팔로잉 할 수 있습니다")
+                                        .summary("팔로잉 하기")
+                                        .pathParameters(
+                                                parameterWithName("id").description("사용자 고유 id")
+                                        ).
+                                        requestFields(
+                                                fieldWithPath("username").description("유저 아이디")
+                                        ).
+                                        responseFields(
+                                                fieldWithPath("resultCode").description("응답코드"),
+                                                fieldWithPath("status").description("Http 상태코드"),
+                                                fieldWithPath("message").description("응답 메세지")
+                                        ).build()
+                        )
                 ));
+
     }
 
     @Test

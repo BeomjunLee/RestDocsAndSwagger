@@ -92,7 +92,7 @@ include::{snippets}/user-following/request-fields.adoc[]
 include::{snippets}/user-following/http-response.adoc[]
 include::{snippets}/user-following/response-fields.adoc[]
 
-=== 팔로잉 목록 보기
+=== 회원 팔로잉 목록 보기
 
 `GET` 요청을 사용해서 회원의 팔로잉 목록을 볼 수 있다.
 
@@ -102,7 +102,7 @@ include::{snippets}/user-getFollowing/http-request.adoc[]
 include::{snippets}/user-getFollowing/http-response.adoc[]
 include::{snippets}/user-getFollowing/response-fields.adoc[]
 
-=== 팔로워 목록 보기
+=== 회원 팔로워 목록 보기
 
 `GET` 요청을 사용해서 회원의 팔로워 목록을 볼 수 있다.
 

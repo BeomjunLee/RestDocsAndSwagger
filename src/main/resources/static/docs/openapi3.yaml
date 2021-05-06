@@ -1,0 +1,196 @@
+openapi: 3.0.1
+info:
+  title: My API
+  description: My API description
+  version: 0.1.0
+servers:
+- url: http://localhost:8080
+tags: []
+paths:
+  /users:
+    post:
+      tags:
+      - users
+      operationId: user-signUp
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/users-id-following-71463040'
+            examples:
+              user-signUp:
+                value: "{\"username\":\"test\"}"
+      responses:
+        "201":
+          description: "201"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users-513393683'
+              examples:
+                user-signUp:
+                  value: "{\"resultCode\":\"OK\",\"status\":201,\"message\":\"회원가입\
+                    \ 성공\",\"data\":{\"id\":15,\"username\":\"test\"}}"
+  /users/{id}/follower:
+    get:
+      tags:
+      - users
+      operationId: user-getFollower
+      parameters:
+      - name: id
+        in: path
+        description: 사용자 고유 id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users-id-follower1085783245'
+              examples:
+                user-getFollower:
+                  value: "{\"resultCode\":\"OK\",\"status\":200,\"message\":\"팔로워\
+                    \ 목록 조회 성공\",\"data\":[\"test2\",\"test3\",\"test4\",\"test5\"\
+                    ]}"
+  /users/{id}/following:
+    get:
+      tags:
+      - users
+      operationId: user-getFollowing
+      parameters:
+      - name: id
+        in: path
+        description: 사용자 고유 id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users-id-following-1495307910'
+              examples:
+                user-getFollowing:
+                  value: "{\"resultCode\":\"OK\",\"status\":200,\"message\":\"팔로잉\
+                    \ 목록 조회 성공\",\"data\":[\"test2\",\"test3\",\"test4\",\"test5\"\
+                    ]}"
+    post:
+      tags:
+      - users
+      summary: 팔로잉 하기
+      description: 다른 사용자를 팔로잉 할 수 있습니다
+      operationId: user-following
+      parameters:
+      - name: id
+        in: path
+        description: 사용자 고유 id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/users-id-following-71463040'
+            examples:
+              user-following:
+                value: "{\n  \"username\" : \"test\"\n}"
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users-id-following-625164606'
+              examples:
+                user-following:
+                  value: "{\n  \"resultCode\" : \"OK\",\n  \"status\" : 200,\n  \"\
+                    message\" : \"팔로우 되었습니다\"\n}"
+components:
+  schemas:
+    users-id-following-1495307910:
+      type: object
+      properties:
+        data:
+          type: array
+          description: 팔로잉 아이디
+          items:
+            oneOf:
+            - type: object
+            - type: boolean
+            - type: string
+            - type: number
+        resultCode:
+          type: string
+          description: 응답코드
+        message:
+          type: string
+          description: 응답 메세지
+        status:
+          type: number
+          description: Http 상태코드
+    users-id-follower1085783245:
+      type: object
+      properties:
+        data:
+          type: array
+          description: 팔로워 아이디
+          items:
+            oneOf:
+            - type: object
+            - type: boolean
+            - type: string
+            - type: number
+        resultCode:
+          type: string
+          description: 응답코드
+        message:
+          type: string
+          description: 응답 메세지
+        status:
+          type: number
+          description: Http 상태코드
+    users-513393683:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: number
+              description: id
+            username:
+              type: string
+              description: 유저 아이디
+        resultCode:
+          type: string
+          description: 응답코드
+        message:
+          type: string
+          description: 응답 메세지
+        status:
+          type: number
+          description: Http 상태코드
+    users-id-following-71463040:
+      type: object
+      properties:
+        username:
+          type: string
+          description: 유저 아이디
+    users-id-following-625164606:
+      type: object
+      properties:
+        resultCode:
+          type: string
+          description: 응답코드
+        message:
+          type: string
+          description: 응답 메세지
+        status:
+          type: number
+          description: Http 상태코드
