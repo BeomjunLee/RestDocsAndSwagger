@@ -135,6 +135,6 @@ docker run -p 80:8080 swaggerapi/swagger-ui
 
 ### Result
 
-주소창에 서버상의 openapi3.yaml 파일 경로 
+주소창에 서버상의 openapi3.yaml 파일 경로 입력
 <img src="https://user-images.githubusercontent.com/69130921/117283847-2d6cba00-aea1-11eb-99ae-85816745751f.png">
 
