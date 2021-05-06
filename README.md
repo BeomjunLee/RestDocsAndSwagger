@@ -1,4 +1,4 @@
-## RestDocsAndSwagger
+## RestDocs + Swagger (With OpenAPI-Spec)
 :clipboard:Spring RestDocs + Swagger 조합 한번에 사용하기(OpenApi Spec):clipboard:
 
 자세한 내용은 포스팅 하였으니 여기서 확인해주세요
@@ -60,6 +60,7 @@ openapi3 {
 
 ```
 <br>
+
 ### Sample Test Code (OpenAPI-Spec Swagger)
 
 ```java
@@ -121,4 +122,19 @@ public void following() throws Exception{
 
 }
 ```
+
+<br>
+
+### Install & Run Swagger-UI with Docker
+
+```java
+docker pull swaggerapi/swagger-ui
+
+docker run -p 80:8080 swaggerapi/swagger-ui
+```
+
+### Result
+
+주소창에 서버상의 openapi3.yaml 파일 경로 
+<img src="https://user-images.githubusercontent.com/69130921/117283847-2d6cba00-aea1-11eb-99ae-85816745751f.png">
 
