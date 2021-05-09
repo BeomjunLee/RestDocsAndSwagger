@@ -1,10 +1,12 @@
 package com.example.sample.user;
 import com.example.sample.user.request.RequestUser;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -14,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
+@Rollback(value = false)
 class UserServiceTest {
 
     @Autowired
@@ -66,5 +69,20 @@ class UserServiceTest {
         //user3 의 팔로워 목록에 user1 이 없어야 됨
         assertThat(!followerList.contains(user4)).isEqualTo(true);
 
+    }
+
+    @Test
+    @DisplayName("배치사이즈 테스트")
+    public void BatchSize() throws Exception{
+        //given
+        //when
+        List<User> users = userRepository.findAll();
+        //then
+        for (int i = 0; i < users.size(); i++) {
+            List<Follow> followingList = users.get(i).getFollowingList();
+            List<Follow> followerList = users.get(i).getFollowerList();
+            followingList.toString();
+            followerList.toString();
+        }
     }
 }

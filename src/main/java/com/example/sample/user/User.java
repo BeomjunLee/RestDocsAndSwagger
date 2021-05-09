@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,11 +24,13 @@ public class User {
 
     private String username;
 
-//    @OneToMany(mappedBy = "followerUser")
-//    private List<Follow> followingList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "followingUser")
-//    private List<Follow> followerList = new ArrayList<>();
+    @BatchSize(size = 100)
+    @OneToMany(mappedBy = "followerUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follow> followingList = new ArrayList<>();
+
+    @BatchSize(size = 100)
+    @OneToMany(mappedBy = "followingUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follow> followerList = new ArrayList<>();
 
     @Builder
     public User(String username) {

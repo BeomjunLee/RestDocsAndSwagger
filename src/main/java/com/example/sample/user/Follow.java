@@ -1,9 +1,6 @@
 package com.example.sample.user;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -40,4 +37,8 @@ public class Follow {
         return follow;
     }
 
+    @Override
+    public String toString() {
+        return "[USER]following:" + followingUser.getUsername() + "|follower:" + followerUser.getUsername();
+    }
 }
