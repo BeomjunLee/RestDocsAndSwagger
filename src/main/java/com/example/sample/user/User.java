@@ -13,7 +13,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
 
@@ -24,13 +23,13 @@ public class User {
 
     private String username;
 
-    @BatchSize(size = 100)
+//    @BatchSize(size = 100)
     @OneToMany(mappedBy = "followerUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Follow> followingList = new ArrayList<>();
+    private List<Follow> followings = new ArrayList<>();
 
-    @BatchSize(size = 100)
+//    @BatchSize(size = 100)
     @OneToMany(mappedBy = "followingUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Follow> followerList = new ArrayList<>();
+    private List<Follow> followers = new ArrayList<>();
 
     @Builder
     public User(String username) {

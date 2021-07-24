@@ -12,7 +12,7 @@ public class Follow {
 
     @Id
     @GeneratedValue
-    @Column(name = "friend_id")
+    @Column(name = "follow_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

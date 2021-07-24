@@ -26,8 +26,9 @@ class UserServiceTest {
     @Autowired
     FollowRepository followRepository;
 
-    @Test
-    @DisplayName("팔로우 테스트")
+//    @Test
+//    @DisplayName("팔로우 테스트")
+    @BeforeEach
     public void follow() throws Exception{
         //given
         userService.addFollowing(1L, "user2");
@@ -79,10 +80,22 @@ class UserServiceTest {
         List<User> users = userRepository.findAll();
         //then
         for (int i = 0; i < users.size(); i++) {
-            List<Follow> followingList = users.get(i).getFollowingList();
-            List<Follow> followerList = users.get(i).getFollowerList();
+            List<Follow> followingList = users.get(i).getFollowings();
+            List<Follow> followerList = users.get(i).getFollowers();
             followingList.toString();
             followerList.toString();
         }
+    }
+    
+    @Test
+    @DisplayName("회원 조회 배치사이즈")
+    public void userBatchSize() throws Exception{
+        //given
+        System.out.println("시작");
+        User user = userRepository.findByUsername("user1").get();
+
+        //when
+        System.out.println(user.getFollowers().size());
+        //then
     }
 }
